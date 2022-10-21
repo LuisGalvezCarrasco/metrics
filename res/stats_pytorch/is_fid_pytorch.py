@@ -362,7 +362,8 @@ if __name__ == '__main__':
         img_list = []
         print('Reading Images from %s ...' % foldername)
         for file in tqdm(files):
-            img = scipy.misc.imread(file, mode='RGB')
+            #img = scipy.misc.imread(file, mode='RGB')
+            img = np.load(file)
             img = scipy.misc.imresize(img, (299, 299), interp='bilinear')
             img = np.cast[np.float32]((-128 + img) / 128.)  # 0~255 -> -1~1
             img = np.expand_dims(img, axis=0).transpose(0, 3, 1, 2)  # NHWC -> NCHW
