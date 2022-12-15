@@ -101,7 +101,7 @@ import pathlib
 import os
 import sys
 import random
-from Pillow import Image # luis: i addd this to replace resize in line 365
+#from Pillow import Image # luis: i addd this to replace resize in line 365
 import numpy #luis
 
 CUR_DIRNAME = os.path.dirname(os.path.abspath(__file__))
