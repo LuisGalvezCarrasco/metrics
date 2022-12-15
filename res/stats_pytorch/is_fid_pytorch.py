@@ -362,12 +362,25 @@ if __name__ == '__main__':
         img_list = []
         print('Reading Images from %s ...' % foldername)
         for file in tqdm(files):
+            img = np.load(file,'r')
+            #img = scipy.misc.imread(file, mode='RGB')
+            img = np.resize(img,(299,299,3))
+            #img = numpy.array(Image.fromarray(img).resize(299,299)) # I add this due to scipy depreation of imresize
+            #img = scipy.misc.imresize(img, (299, 299), interp='bilinear') #luis : i comment this due to scipy depreation of imresize
+            img = np.cast[np.float32]((-128 + img) / 128.)  # 0~255 -> -1~1 
+            img = np.expand_dims(img, axis=0).transpose(0, 3, 1, 2)  # NHWC -> NCHW
+            img_list.append(img)
+
+            ''' 
+            #luis: i comment this lblock of code to replace with the above block code
+            #same line codes than above but with scipy == 1.2.2 which includes imresize
             #img = scipy.misc.imread(file, mode='RGB')
             img = np.load(file)
             img = scipy.misc.imresize(img, (299, 299), interp='bilinear')
             img = np.cast[np.float32]((-128 + img) / 128.)  # 0~255 -> -1~1
             img = np.expand_dims(img, axis=0).transpose(0, 3, 1, 2)  # NHWC -> NCHW
             img_list.append(img)
+            '''
         random.shuffle(img_list)
         img_list_tensor = torch.Tensor(np.concatenate(img_list, axis=0))
         return img_list_tensor

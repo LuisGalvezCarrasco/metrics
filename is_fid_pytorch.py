@@ -378,9 +378,9 @@ if __name__ == '__main__':
         img_list = []
         print('Reading Images from %s ...' % foldername)
         for file in tqdm(files):
-            img = numpy.read(file,'r')
+            img = np.load(file,'r')
             #img = scipy.misc.imread(file, mode='RGB')
-            img = numpy.resize(img,[299,299])
+            img = np.resize(img,(299,299,3))
             #img = numpy.array(Image.fromarray(img).resize(299,299)) # I add this due to scipy depreation of imresize
             #img = scipy.misc.imresize(img, (299, 299), interp='bilinear') #luis : i comment this due to scipy depreation of imresize
             img = np.cast[np.float32]((-128 + img) / 128.)  # 0~255 -> -1~1 
