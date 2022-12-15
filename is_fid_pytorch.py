@@ -101,6 +101,7 @@ import pathlib
 import os
 import sys
 import random
+from Pillow import Image # luis: i addd this to replace resize in line 365
 
 CUR_DIRNAME = os.path.dirname(os.path.abspath(__file__))
 
@@ -377,7 +378,8 @@ if __name__ == '__main__':
         print('Reading Images from %s ...' % foldername)
         for file in tqdm(files):
             img = scipy.misc.imread(file, mode='RGB')
-            img = scipy.misc.imresize(img, (299, 299), interp='bilinear')
+            img = numpy.array(Image.fromarray(img).resize(299,299))
+            #img = scipy.misc.imresize(img, (299, 299), interp='bilinear')
             img = np.cast[np.float32]((-128 + img) / 128.)  # 0~255 -> -1~1
             img = np.expand_dims(img, axis=0).transpose(0, 3, 1, 2)  # NHWC -> NCHW
             img_list.append(img)
