@@ -258,7 +258,7 @@ class ScoreModel:
         return mu, sigma
 
     def get_score_image_tensor(self, imgs_nchw, mu1=0, sigma1=0,
-                               n_split=10, batch_size=32, return_stats=False,
+                               n_split=10, batch_size=16, return_stats=False, #luis i change batch_size=32 by 16
                                return_each_score=False):
         """
         param:
